@@ -3,7 +3,7 @@ import argparse
 import regex as re
 from urllib.parse import urlparse
 
-DEBUG = True
+DEBUG = False
 
 def unshorten_url(url):
     if DEBUG:
@@ -67,10 +67,27 @@ def unshorten_url(url):
 
 
 def main():
-    pass
+    print("CLI Coming soon.")
+    print(f"You can call unshorten_url from this shell.\nYou can set debug mode with dbg(<True or False>)")
+    def dbg(debug):
+        global DEBUG
+        DEBUG = debug
+        if DEBUG:
+            print("DEBUG: Debug mode is on.")
+        else:
+            print("DEBUG: Debug mode is off.")
+
+    while True:
+        comm = input("> ")
+        if not comm.strip():
+            continue
+        try:
+            comp = compile(comm, "<string>", "eval")
+            res = eval(comp, globals(), {"dbg": dbg})
+            if res:
+                print(res)
+        except Exception as e:
+            print(f"Error executing {comm}:\n{e}")
 
 if __name__ == '__main__':
     main()
-
-# Temp
-print(f"Shortened url is: \"{unshorten_url("http://127.0.0.1:5000/meta")}\"")
